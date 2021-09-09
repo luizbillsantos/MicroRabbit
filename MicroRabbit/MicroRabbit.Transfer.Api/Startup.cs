@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using StackExchange.Redis;
 
 namespace MicroRabbit.Transfer.Api
 {
@@ -61,6 +62,20 @@ namespace MicroRabbit.Transfer.Api
             #region MediaTr
 
             services.AddMediatR(typeof(Startup));
+
+            #endregion
+
+            #region Redis
+
+            ConfigurationOptions option = new ConfigurationOptions
+            {
+                AbortOnConnectFail = false,
+                ConnectTimeout = 60,
+                EndPoints = { Configuration.GetConnectionString("RedisServer") }
+            };
+
+            var multiplexer = ConnectionMultiplexer.Connect(option);
+            services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 
             #endregion
 

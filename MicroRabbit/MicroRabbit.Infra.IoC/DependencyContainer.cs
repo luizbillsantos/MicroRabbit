@@ -15,6 +15,7 @@ using MicroRabbit.Transfer.Data.Context;
 using MicroRabbit.Transfer.Data.Repository;
 using MicroRabbit.Transfer.Domain.EventHandlers;
 using MicroRabbit.Transfer.Domain.Interfaces;
+using MicroRabbit.Transfer.Domain.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,7 @@ namespace MicroRabbit.Infra.IoC
 
             //Subscriptions
             services.AddTransient<TransferEventHandler>();
+            services.AddTransient<IRedisRepository<TransferLog>, RedisRepository<TransferLog>>();
 
             //Domain Events
             services.AddTransient<IEventHandler<MicroRabbit.Transfer.Domain.Events.TransferCreatedEvent>, TransferEventHandler>();
