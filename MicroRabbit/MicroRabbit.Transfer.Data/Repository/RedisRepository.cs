@@ -14,8 +14,10 @@ namespace MicroRabbit.Transfer.Data.Repository
 
         public RedisRepository(IConfiguration configuration)
         {
+            
             _redis = ConnectionMultiplexer.Connect(
                configuration.GetConnectionString("RedisServer"));
+            _redis.IncludeDetailInExceptions = true;
         }
 
         public T GetValueKey(string key)
